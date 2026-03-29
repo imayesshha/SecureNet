@@ -1,15 +1,12 @@
-// routes/auth.js — authentication routes (register, login)
+// routes/auth.js — authentication routes
 const express = require('express');
 const router = express.Router();
+const { register, login } = require('../controllers/authController');
 
 // POST /api/register
-router.post('/register', (req, res) => {
-  res.json({ message: 'Register route working ✅' });
-});
+router.post('/register', register);
 
 // POST /api/login
-router.post('/login', (req, res) => {
-  res.json({ message: 'Login route working ✅' });
-});
+router.post('/login', login);
 
 module.exports = router;
