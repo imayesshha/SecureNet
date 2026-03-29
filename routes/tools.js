@@ -1,20 +1,12 @@
-// routes/tools.js — security tool routes
+// routes/tools.js — security tool routes (protected)
 const express = require('express');
 const router = express.Router();
+const { checkPassword, checkUrl, getHistory } = require('../controllers/toolsController');
+const { protect } = require('../middleware/authMiddleware');
 
-// POST /api/check-password
-router.post('/check-password', (req, res) => {
-  res.json({ message: 'Password checker working ✅' });
-});
-
-// POST /api/check-url
-router.post('/check-url', (req, res) => {
-  res.json({ message: 'URL checker working ✅' });
-});
-
-// GET /api/history
-router.get('/history', (req, res) => {
-  res.json({ message: 'History route working ✅' });
-});
+// All routes below are protected — need JWT token
+router.post('/check-password', protect, checkPassword);
+router.post('/check-url', protect, checkUrl);
+router.get('/history', protect, getHistory);
 
 module.exports = router;
