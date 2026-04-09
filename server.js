@@ -11,7 +11,11 @@ const app = express();
 
 // === MIDDLEWARE ===
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json({ limit: '10mb' }));
 
 const limiter = rateLimit({
@@ -36,7 +40,6 @@ const connectDB = async () => {
     console.log('✅ MongoDB Connected');
   } catch (error) {
     console.error('❌ MongoDB Connection Failed:', error.message);
-    // ❌ REMOVED process.exit(1) — this was crashing Vercel!
   }
 };
 
@@ -56,8 +59,7 @@ app.use('/api', async (req, res, next) => {
   next();
 });
 
-
-
+app.use('/api', apiRoutes);
 
 // Catch-all (404 for unknown routes)
 app.use((req, res) => {
