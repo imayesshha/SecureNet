@@ -56,7 +56,8 @@ app.use('/api', async (req, res, next) => {
   next();
 });
 
-app.use('/api', apiRoutes);
+
+
 
 // Catch-all (404 for unknown routes)
 app.use((req, res) => {
